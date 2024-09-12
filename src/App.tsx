@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Todolist} from "./Todolsit";
+import {TodolistType} from "./model/todolists-reducer";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {
@@ -17,6 +17,8 @@ import {
 import Grid from '@mui/material/Grid2';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from "./MenuButton";
+import {Todolist} from "./Todolsit";
+
 
 export type Task = {
     id: string
@@ -25,12 +27,6 @@ export type Task = {
 }
 
 export type Filter = 'all' | 'active' | 'completed'
-
-type Todolist = {
-    id: string,
-    title: string,
-    filter: Filter
-}
 
 type TasksState = {
     [key: string]: Task[]
@@ -53,7 +49,7 @@ function App() {
         }
     });
 
-    const [todolists, setTodolists] = useState<Todolist[]>([
+    const [todolists, setTodolists] = useState<TodolistType[]>([
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
@@ -107,7 +103,7 @@ function App() {
     }
 
     const addTodolist = (title: string) => {
-        const newTodolist: Todolist = {id: v1(), title: title, filter: 'all'}
+        const newTodolist: TodolistType = {id: v1(), title: title, filter: 'all'}
         setTodolists([newTodolist, ...todolists])
 
         setTasks({...tasks, [newTodolist.id]: []})
