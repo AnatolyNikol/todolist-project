@@ -18,19 +18,9 @@ import Grid from '@mui/material/Grid2';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from "./MenuButton";
 import {Todolist} from "./Todolsit";
-
-
-export type Task = {
-    id: string
-    title: string
-    isDone: boolean
-}
+import {TasksState} from "./model/tasks-reducer";
 
 export type Filter = 'all' | 'active' | 'completed'
-
-type TasksState = {
-    [key: string]: Task[]
-}
 
 type ThemeMode = 'light' | 'dark'
 
