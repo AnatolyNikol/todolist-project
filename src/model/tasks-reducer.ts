@@ -10,9 +10,14 @@ export const tasksReducer = (state: TasksState, {type, payload}: ActionsType) =>
             const newTask = {id: '3', title: payload.title, isDone: false}
             return {...state, [payload.todolistID]: [...state[payload.todolistID], newTask]}
         }
-        case 'CHANGE-TASK-TITLE': {
+        case 'CHANGE-TASK-STATUS': {
             return {...state, [payload.todolistID]: state[payload.todolistID].map(task => task.id === payload.taskID
                     ? {...task, isDone: payload.isDone}
+                    : task)}
+        }
+        case 'CHANGE-TASK-TITLE': {
+            return {...state, [payload.todolistID]: state[payload.todolistID].map(task => task.id === payload.taskID
+                    ? {...task, title: payload.title}
                     : task)}
         }
         case 'ADD-TODOLIST': {
@@ -39,8 +44,13 @@ export const addTaskAC = (payload: {todolistID: string, title: string}) => {
 }
 
 export const changeTaskStatusAC = (payload: { todolistID: string, taskID: string, isDone: boolean}) => {
+    return {type: 'CHANGE-TASK-STATUS', payload: payload} as const
+}
+
+export const changeTaskTitleAC = (payload: { todolistID: string, taskID: string, title: string}) => {
     return {type: 'CHANGE-TASK-TITLE', payload: payload} as const
 }
+
 
 
 //types
@@ -58,6 +68,7 @@ export type Task = {
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 export type AddTaskActionType = ReturnType<typeof addTaskAC>
 export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
+export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
 
-type ActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | AddTodolistActionType
-| RemoveTodolistActionType
+type ActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType
+    | AddTodolistActionType | RemoveTodolistActionType

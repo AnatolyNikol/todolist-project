@@ -1,10 +1,11 @@
 import React, {ChangeEvent} from "react";
-import {Filter, Task} from "./App";
+import {Filter} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Box, Button, Checkbox, IconButton, List, ListItem} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {filterButtonsContainerSx, getListItemSx} from "./Todolist.styles";
+import {Task} from "./model/tasks-reducer";
 
 type Props = {
     todolistId: string
