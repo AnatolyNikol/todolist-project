@@ -1,13 +1,15 @@
 import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
 import {v1} from "uuid";
 
-export const tasksReducer = (state: TasksState, {type, payload}: ActionsType) => {
+const initialState = {}
+
+export const tasksReducer = (state: TasksState = initialState, {type, payload}: ActionsType) => {
     switch (type) {
         case 'REMOVE-TASK': {
             return {...state, [payload.todolistID]: state[payload.todolistID].filter(task => task.id !== payload.taskID)}
         }
         case 'ADD-TASK': {
-            const newTask = {id: '3', title: payload.title, isDone: false}
+            const newTask = {id: v1(), title: payload.title, isDone: false}
             return {...state, [payload.todolistID]: [...state[payload.todolistID], newTask]}
         }
         case 'CHANGE-TASK-STATUS': {
@@ -28,7 +30,7 @@ export const tasksReducer = (state: TasksState, {type, payload}: ActionsType) =>
             return state
         }
         default: {
-            throw new Error("I don't understand this type")
+            return state
         }
     }
 }
@@ -56,10 +58,10 @@ export const changeTaskTitleAC = (payload: { todolistID: string, taskID: string,
 //types
 
 export type TasksState = {
-    [key: string]: Task[]
+    [key: string]: TaskType[]
 }
 
-export type Task = {
+export type TaskType = {
     id: string
     title: string
     isDone: boolean
