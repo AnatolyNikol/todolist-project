@@ -6,8 +6,8 @@ import {
   changeTodolistTitleAC,
   removeTodolistAC,
   TodolistType,
-} from './model/todolists-reducer';
-import { AddItemForm } from './AddItemForm';
+} from '../model/todolists-reducer';
+import { AddItemForm } from '../AddItemForm';
 import {
   AppBar,
   Container,
@@ -21,17 +21,19 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import MenuIcon from '@mui/icons-material/Menu';
-import { MenuButton } from './MenuButton';
-import { Todolist } from './Todolsit';
+import { MenuButton } from '../MenuButton';
+import { Todolist } from '../Todolsit';
 import {
   addTaskAC,
   changeTaskStatusAC,
   changeTaskTitleAC,
   removeTaskAC,
   TasksState,
-} from './model/tasks-reducer';
+} from '../model/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './app/store';
+import { RootState } from '../app/store';
+import { getTheme } from '../common/theme/theme';
+import { changeThemeAC } from './app-reducer';
 
 export type Filter = 'all' | 'active' | 'completed';
 
@@ -42,18 +44,12 @@ function AppWithRedux() {
     store => store.todolists,
   );
   const tasks = useSelector<RootState, TasksState>(store => store.tasks);
+  const themeMode = useSelector<RootState, ThemeMode>(
+    store => store.app.themeMode,
+  );
   const dispatch = useDispatch();
 
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
-
-  const theme = createTheme({
-    palette: {
-      mode: themeMode === 'light' ? 'light' : 'dark',
-      primary: {
-        main: '#087EA4',
-      },
-    },
-  });
+  const theme = getTheme(themeMode);
 
   const removeTask = (id: string, todolistId: string) => {
     dispatch(removeTaskAC({ taskID: id, todolistID: todolistId }));
@@ -110,7 +106,7 @@ function AppWithRedux() {
   };
 
   const changeModeHandler = () => {
-    setThemeMode(themeMode == 'light' ? 'dark' : 'light');
+    dispatch(changeThemeAC(themeMode == 'light' ? 'dark' : 'light'));
   };
 
   return (
@@ -124,7 +120,7 @@ function AppWithRedux() {
           <div>
             <MenuButton color="inherit">Login</MenuButton>
             <MenuButton color="inherit">Logout</MenuButton>
-            <MenuButton color="inherit" background={theme.palette.primary.dark}>
+            <MenuButton color="inherit" background={theme.palette.primary.main}>
               Faq
             </MenuButton>
             <Switch color={'default'} onChange={changeModeHandler} />
