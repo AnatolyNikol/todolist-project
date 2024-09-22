@@ -1,5 +1,4 @@
 import { v1 } from 'uuid';
-import { Filter } from '../app/App';
 
 const initialState: TodolistType[] = [];
 
@@ -78,6 +77,8 @@ export type TodolistType = {
   title: string;
   filter: Filter;
 };
+
+export type Filter = 'all' | 'active' | 'completed';
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>;
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>;

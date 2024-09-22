@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import { Filter } from './app/App';
 import { AddItemForm } from './AddItemForm';
 import { EditableSpan } from './EditableSpan';
 import {
@@ -13,6 +12,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import { filterButtonsContainerSx, getListItemSx } from './Todolist.styles';
 import { Task } from './model/tasks-reducer';
+import { Filter } from './model/todolists-reducer';
 
 type Props = {
   todolistId: string;
