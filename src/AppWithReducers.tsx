@@ -163,7 +163,7 @@ function AppWithReducers() {
             }
 
             return (
-              <Grid>
+              <Grid key={todolist.id}>
                 <Paper sx={{ p: '0 20px 20px 20px' }}>
                   <Todolist
                     todolistId={todolist.id}

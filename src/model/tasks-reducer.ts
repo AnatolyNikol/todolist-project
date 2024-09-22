@@ -20,7 +20,7 @@ export const tasksReducer = (
       };
     }
     case 'ADD-TASK': {
-      const newTask = { id: '3', title: payload.title, isDone: false };
+      const newTask = { id: v1(), title: payload.title, isDone: false };
       return {
         ...state,
         [payload.todolistID]: [...state[payload.todolistID], newTask],
