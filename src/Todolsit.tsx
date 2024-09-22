@@ -1,27 +1,18 @@
 import React, { ChangeEvent } from 'react';
 import { AddItemForm } from './AddItemForm';
 import { EditableSpan } from './EditableSpan';
-import {
-  Box,
-  Button,
-  Checkbox,
-  IconButton,
-  List,
-  ListItem,
-} from '@mui/material';
+import { Checkbox, IconButton, List, ListItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { filterButtonsContainerSx, getListItemSx } from './Todolist.styles';
+import { getListItemSx } from './Todolist.styles';
 import { Task } from './model/tasks-reducer';
-import { Filter } from './model/todolists-reducer';
+import { Filter, TodolistType } from './model/todolists-reducer';
+import { FilterTasksButtons } from './FilterTasksButtons';
 
 type Props = {
-  todolistId: string;
-  title: string;
+  todolist: TodolistType;
   tasks: Task[];
   date?: string;
-  filter: Filter;
   removeTask: (id: string, todolistId: string) => void;
-  onChangeFilter: (filter: Filter, todolistId: string) => void;
   addTask: (title: string, todolistId: string) => void;
   changeTaskStatus: (
     taskId: string,
@@ -35,41 +26,37 @@ type Props = {
 
 export const Todolist = (props: Props) => {
   const {
-    todolistId,
-    title,
+    todolist,
     tasks,
     date,
     removeTask,
-    onChangeFilter,
     addTask,
     changeTaskStatus,
-    filter,
     removeTodolist,
     updateTask,
     updateTodolist,
   } = props;
 
   const removeTodolistHandler = () => {
-    removeTodolist(todolistId);
-  };
-
-  const changeFilterTasksHandler = (filter: Filter, todolistId: string) => {
-    onChangeFilter(filter, todolistId);
+    removeTodolist(todolist.id);
   };
 
   const addTaskHandler = (title: string) => {
-    addTask(title, todolistId);
+    addTask(title, todolist.id);
   };
 
   const changeTitleTodolistHandler = (newTitle: string) => {
-    updateTodolist(todolistId, newTitle);
+    updateTodolist(todolist.id, newTitle);
   };
 
   return (
     <div>
       <div className="todolist-title-container">
         <h3>
-          <EditableSpan value={title} onChange={changeTitleTodolistHandler} />
+          <EditableSpan
+            value={todolist.title}
+            onChange={changeTitleTodolistHandler}
+          />
         </h3>
         <IconButton title={'x'} onClick={removeTodolistHandler}>
           <DeleteIcon />
@@ -82,16 +69,16 @@ export const Todolist = (props: Props) => {
         <List>
           {tasks.map(task => {
             const removeTaskHandler = () => {
-              removeTask(task.id, todolistId);
+              removeTask(task.id, todolist.id);
             };
             const changeTaskStatusHandler = (
               event: ChangeEvent<HTMLInputElement>,
             ) => {
               const newStatusValue = event.currentTarget.checked;
-              changeTaskStatus(task.id, newStatusValue, todolistId);
+              changeTaskStatus(task.id, newStatusValue, todolist.id);
             };
             const changeTitleTaskHandler = (newTitle: string) => {
-              updateTask(todolistId, task.id, newTitle);
+              updateTask(todolist.id, task.id, newTitle);
             };
             return (
               <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
@@ -113,29 +100,7 @@ export const Todolist = (props: Props) => {
           })}
         </List>
       )}
-      <Box sx={filterButtonsContainerSx}>
-        <Button
-          variant={filter === 'all' ? 'outlined' : 'text'}
-          onClick={() => changeFilterTasksHandler('all', todolistId)}
-          color={'inherit'}
-        >
-          All
-        </Button>
-        <Button
-          variant={filter === 'active' ? 'outlined' : 'text'}
-          onClick={() => changeFilterTasksHandler('active', todolistId)}
-          color={'primary'}
-        >
-          Active
-        </Button>
-        <Button
-          variant={filter === 'completed' ? 'outlined' : 'text'}
-          onClick={() => changeFilterTasksHandler('completed', todolistId)}
-          color={'secondary'}
-        >
-          Completed
-        </Button>
-      </Box>
+      <FilterTasksButtons todolist={todolist} />
       <div>{date}</div>
     </div>
   );

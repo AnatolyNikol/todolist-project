@@ -29,12 +29,6 @@ export const Todolists = () => {
     dispatch(removeTaskAC({ taskID: id, todolistID: todolistId }));
   };
 
-  const onChangeFilter = (filter: Filter, todolistId: string) => {
-    dispatch(
-      changeTodolistFilterAC({ todolistId: todolistId, filter: filter }),
-    );
-  };
-
   const addTask = (title: string, todolistId: string) => {
     dispatch(addTaskAC({ todolistID: todolistId, title: title }));
   };
@@ -87,13 +81,10 @@ export const Todolists = () => {
       <Grid key={todolist.id}>
         <Paper sx={{ p: '0 20px 20px 20px' }}>
           <Todolist
-            todolistId={todolist.id}
             key={todolist.id}
-            title={todolist.title}
+            todolist={todolist}
             tasks={tasksForTodolist}
-            filter={todolist.filter}
             removeTask={removeTask}
-            onChangeFilter={onChangeFilter}
             addTask={addTask}
             changeTaskStatus={changeTaskStatus}
             removeTodolist={removeTodolist}
