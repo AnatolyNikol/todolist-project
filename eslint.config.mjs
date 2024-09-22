@@ -9,6 +9,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
 /**@type {import('eslint').Linter.FlatConfig[]} */
+
 export default tseslint.config(
   {
     plugins: {
@@ -18,17 +19,21 @@ export default tseslint.config(
       'react-hooks': eslintReactHooks,
     },
   },
+
   { ignores: ['node_modules'] },
+
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   js.configs.recommended,
   pluginReact.configs.flat.recommended,
+
   {
     languageOptions: {
-      globals: { ...globals.browser, ...globals.es2022 },
+      globals: { ...globals.browser, ...globals.es2022, ...globals.jest },
       parserOptions: { project: './tsconfig.json' },
     },
   },
+
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     rules: {
@@ -37,16 +42,17 @@ export default tseslint.config(
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn'],
       '@typescript-eslint/ban-ts-comment': ['warn'],
+      'react/react-in-jsx-scope': 'off',
     },
   },
-  {
-    overrides: [
-      {
-        files: ['tests/**/*'],
-        env: {
-          jest: true,
-        },
-      },
-    ],
-  },
+  // {
+  //   overrides: [
+  //     {
+  //       files: ['tests/**/*'],
+  //       env: {
+  //         jest: true,
+  //       },
+  //     },
+  //   ],
+  // },
 );

@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from './app/store';
-import { addTaskAC } from './model/tasks-reducer';
 import { TodolistType } from './model/todolists-reducer';
 import Grid from '@mui/material/Grid2';
 import { Paper } from '@mui/material';
@@ -11,17 +10,11 @@ export const Todolists = () => {
     store => store.todolists,
   );
 
-  const dispatch = useDispatch();
-
-  const addTask = (title: string, todolistId: string) => {
-    dispatch(addTaskAC({ todolistID: todolistId, title: title }));
-  };
-
   return todolists.map(todolist => {
     return (
       <Grid key={todolist.id}>
         <Paper sx={{ p: '0 20px 20px 20px' }}>
-          <Todolist key={todolist.id} todolist={todolist} addTask={addTask} />
+          <Todolist key={todolist.id} todolist={todolist} />
         </Paper>
       </Grid>
     );

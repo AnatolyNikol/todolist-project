@@ -89,10 +89,10 @@ export const changeTaskTitleAC = (payload: {
 //types
 
 export type TasksState = {
-  [key: string]: Task[];
+  [key: string]: TaskType[];
 };
 
-export type Task = {
+export type TaskType = {
   id: string;
   title: string;
   isDone: boolean;
