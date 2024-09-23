@@ -1,14 +1,10 @@
-import { useSelector } from 'react-redux';
-import { RootState } from './app/store';
-import { TodolistType } from './model/todolists-reducer';
 import Grid from '@mui/material/Grid2';
 import { Paper } from '@mui/material';
-import { Todolist } from './Todolsit';
+import { Todolist } from './Todolist/Todolsit';
+import { useAppSelector } from '../../../../common/hooks/useAppSelector';
 
 export const Todolists = () => {
-  const todolists = useSelector<RootState, TodolistType[]>(
-    store => store.todolists,
-  );
+  const todolists = useAppSelector(store => store.todolists);
 
   return todolists.map(todolist => {
     return (

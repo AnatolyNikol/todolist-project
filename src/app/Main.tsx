@@ -1,12 +1,12 @@
 import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { AddItemForm } from './AddItemForm';
-import { useDispatch } from 'react-redux';
-import { addTodolistAC } from './model/todolists-reducer';
-import { Todolists } from './Todolists';
+import { AddItemForm } from '../common/components/AddItemForm';
+import { addTodolistAC } from '../features/todolists/ui/model/todolists-reducer';
+import { Todolists } from '../features/todolists/ui/Todolists/Todolists';
+import { useAppDispatch } from '../common/hooks/useAppDispatch';
 
 export const Main = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const addTodolist = (title: string) => {
     const action = addTodolistAC(title);
     dispatch(action);

@@ -1,16 +1,16 @@
 import { ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
-import { getListItemSx } from './Todolist.styles';
 import {
   changeTaskStatusAC,
   changeTaskTitleAC,
   removeTaskAC,
   TaskType,
-} from './model/tasks-reducer';
-import { TodolistType } from './model/todolists-reducer';
+} from './features/todolists/ui/model/tasks-reducer';
+import { TodolistType } from './features/todolists/ui/model/todolists-reducer';
 import { Checkbox, IconButton, ListItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { EditableSpan } from './EditableSpan';
+import { EditableSpan } from './common/components/EditableSpan';
+import { getListItemSx } from './features/todolists/ui/Todolists/Todolist/Tasks/Task.styles';
+import { useAppDispatch } from './common/hooks/useAppDispatch';
 
 type Props = {
   task: TaskType;
@@ -20,7 +20,7 @@ type Props = {
 export const Task = (props: Props) => {
   const { task, todolist } = props;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const removeTaskHandler = () => {
     dispatch(removeTaskAC({ taskID: task.id, todolistID: todolist.id }));

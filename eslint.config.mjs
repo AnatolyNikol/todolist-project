@@ -45,14 +45,4 @@ export default tseslint.config(
       'react/react-in-jsx-scope': 'off',
     },
   },
-  // {
-  //   overrides: [
-  //     {
-  //       files: ['tests/**/*'],
-  //       env: {
-  //         jest: true,
-  //       },
-  //     },
-  //   ],
-  // },
 );

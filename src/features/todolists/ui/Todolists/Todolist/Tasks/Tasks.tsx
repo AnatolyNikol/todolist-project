@@ -1,9 +1,7 @@
 import { List } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from './app/store';
-import { TasksState } from './model/tasks-reducer';
-import { TodolistType } from './model/todolists-reducer';
-import { Task } from './Task';
+import { TodolistType } from '../../../model/todolists-reducer';
+import { Task } from '../../../../../../Task';
+import { useAppSelector } from '../../../../../../common/hooks/useAppSelector';
 
 type Props = {
   todolist: TodolistType;
@@ -12,7 +10,7 @@ type Props = {
 export const Tasks = (props: Props) => {
   const { todolist } = props;
 
-  const tasks = useSelector<RootState, TasksState>(store => store.tasks);
+  const tasks = useAppSelector(store => store.tasks);
 
   const allTodolistTasks = tasks[todolist.id];
 

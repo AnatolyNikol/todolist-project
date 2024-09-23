@@ -1,16 +1,11 @@
-import './App.css';
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '../app/store';
 import { getTheme } from '../common/theme/theme';
-import { Header } from '../Header';
-import { Main } from '../Main';
-import { ThemeMode } from './app-reducer';
+import { Header } from '../common/components/Header';
+import { Main } from './Main';
+import { useAppSelector } from '../common/hooks/useAppSelector';
 
 function AppWithRedux() {
-  const themeMode = useSelector<RootState, ThemeMode>(
-    store => store.app.themeMode,
-  );
+  const themeMode = useAppSelector(store => store.app.themeMode);
 
   return (
     <ThemeProvider theme={getTheme(themeMode)}>
