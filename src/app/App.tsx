@@ -3,9 +3,10 @@ import { getTheme } from '../common/theme/theme';
 import { Header } from '../common/components/Header';
 import { Main } from './Main';
 import { useAppSelector } from '../common/hooks/useAppSelector';
+import { selectThemeMode } from './appSelectors';
 
 function AppWithRedux() {
-  const themeMode = useAppSelector(store => store.app.themeMode);
+  const themeMode = useAppSelector(selectThemeMode);
 
   return (
     <ThemeProvider theme={getTheme(themeMode)}>
